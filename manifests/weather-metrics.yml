@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-metrics
+  namespace: managed
+  labels:
+    app: weather-metrics
+  annotations:
+    prometheus.io/probe: "true"
+spec:
+  selector:
+    app: weather-metrics
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: managed
+  name: weather-metrics
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weather-metrics
+    spec:
+      containers:
+      - name: weather-metrics
+        image: quay.io/ktbartholomew/weather-metrics:latest
+        env:
+        - name: STATION
+          value: KDFW
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "0.05"
