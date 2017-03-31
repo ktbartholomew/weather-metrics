@@ -5,7 +5,6 @@ This is a teeny-tiny web service that fetches the basic weather information for 
 ## Build
 
 ```bash
-./script/build.sh
 docker build -t <tagname> .
 ```
 
