@@ -96,9 +96,9 @@ func getWeather() weatherReport {
 
 	weather := weatherReport{}
 	json.Unmarshal(buf, &weather)
-  if weather.Temperature[0] == 77 {
-    weather.Temperature = "-" + weather.Temperature[1:]
-  }
-
+        if weather.Temperature[0] == 77 {
+                weather.Temperature = "-" + weather.Temperature[1:]
+        }
+	
 	return weather
 }
